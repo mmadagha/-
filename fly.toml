@@ -1,20 +1,19 @@
-# fly.toml — Farsanime media proxy (Node.js) on Fly.io
+# fly.toml app configuration file generated for farsanime on 2026-11-13T19:18:25Z
 #
-# این سرویس stateless است و به ولوم نیاز ندارد.
-# کلید PROXY_KEY به‌صورت secret ذخیره می‌شود (نه در این فایل).
+# See https://docs.fly.io/reference/configuration for information about how to use this file.
+#
 
-app = 'farsanime-proxy'
-primary_region = 'fra'
+app = 'farsanime'
+primary_region = 'ams'
 
 [build]
-
 [env]
-  PORT = '8080'
-  NODE_ENV = 'production'
   ALLOWED_HOSTS = 'farsanime.ir,di.farsanime.ir'
-  UPSTREAM_REFERER = 'https://farsanime.ir/'
   FETCH_TIMEOUT_MS = '15000'
   MAX_REDIRECTS = '4'
+  NODE_ENV = 'production'
+  PORT = '8080'
+  UPSTREAM_REFERER = 'https://farsanime.ir/'
 
 [http_service]
   internal_port = 8080
@@ -24,17 +23,15 @@ primary_region = 'fra'
   min_machines_running = 0
   processes = ['app']
 
-  # استریم رسانه ممکن است بین دو chunk چند لحظه بی‌ترافیک شود؛
-  # idle_timeout را بالاتر از پیش‌فرض می‌گذاریم تا اتصال قطع نشود.
   [http_service.http_options]
     idle_timeout = 300
 
   [[http_service.checks]]
-    grace_period = '10s'
     interval = '30s'
+    timeout = '5s'
+    grace_period = '10s'
     method = 'GET'
     path = '/healthz'
-    timeout = '5s'
 
 [[vm]]
   size = 'shared-cpu-1x'
