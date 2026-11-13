@@ -1,0 +1,12 @@
+fly.toml
+.git/
+__pycache__/
+node_modules/
+.env
+.env.*
+.fly-recover/
+.fly-token.tmp
+flyctl
+flyctl.exe
+flyctl.zip
+*.log
